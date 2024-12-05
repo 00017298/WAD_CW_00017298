@@ -20,5 +20,5 @@ SQL Server (or another relational database): Used for storing student grades and
 Entity Framework Migrations: To handle database schema changes and updates.
 
 Version Control:
-Git: To manage the project�s version history and collaboration.
+Git: To manage the project's version history and collaboration.
 GitHub: For hosting the repository, including code, diagrams, and documentation.
