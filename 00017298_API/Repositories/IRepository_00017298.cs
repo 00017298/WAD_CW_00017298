@@ -2,10 +2,10 @@
 {
     public interface IRepository_00017298<T>
     {
-        Task Create(T entity);
-        Task Update(T entity);
-        Task Delete(int id);
-        Task<T> Get(int id);
-        Task<IEnumerable<T>> GetAll();
+        Task<IEnumerable<T>> GetAllAsync();
+        Task<T> GetByIDAsync(int it);
+        Task AddAsync(T entity);
+        Task UpdateAsync(T entity);
+        Task DeleteAsync(int id);
     }
 }

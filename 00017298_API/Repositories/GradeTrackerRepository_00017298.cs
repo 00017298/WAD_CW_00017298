@@ -19,7 +19,7 @@ namespace _00017298_API.Repositories
 
 
 
-        public async Task Create(StudentGradeTracker_00017298 entity)
+        public async Task AddAsync(StudentGradeTracker_00017298 entity)
         {
             _context.StudentGradeTracker_00017298s.Add(entity);
             await _context.SaveChangesAsync();
@@ -31,7 +31,7 @@ namespace _00017298_API.Repositories
 
 
 
-        public async Task Delete(int id)
+        public async Task DeleteAsync(int id)
         {
             var deletItem = await _context.StudentGradeTracker_00017298s.FindAsync(id);
             if (deletItem != null)
@@ -48,7 +48,7 @@ namespace _00017298_API.Repositories
 
 
 
-        public async Task<StudentGradeTracker_00017298> Get(int id)
+        public async Task<StudentGradeTracker_00017298> GetByIDAsync(int id)
         {
             return await _context.StudentGradeTracker_00017298s.FindAsync(id);
         }
@@ -59,7 +59,7 @@ namespace _00017298_API.Repositories
 
 
 
-        public async Task<IEnumerable<StudentGradeTracker_00017298>> GetAll()
+        public async Task<IEnumerable<StudentGradeTracker_00017298>> GetAllAsync()
         {
             return await _context.StudentGradeTracker_00017298s.ToListAsync();
         }
@@ -76,10 +76,12 @@ namespace _00017298_API.Repositories
 
 
    
-        public async Task Update(StudentGradeTracker_00017298 entity)
+        public async Task UpdateAsync(StudentGradeTracker_00017298 entity)
         {
             _context.Entry(entity).State = EntityState.Modified;
             await _context.SaveChangesAsync();
         }
+
+       
     }
 }

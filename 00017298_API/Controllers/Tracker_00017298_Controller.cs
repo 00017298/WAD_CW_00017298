@@ -1,5 +1,6 @@
 ﻿using _00017298_API.Data;
 using _00017298_API.Models;
+using _00017298_API.Repositories;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -10,55 +11,110 @@ namespace _00017298_API.Controllers
     [ApiController]
     public class Tracker_00017298_Controller : ControllerBase
     {
-        private readonly StudentGradeTracker_00017298_DbContext _dbContext;
-        public Tracker_00017298_Controller(StudentGradeTracker_00017298_DbContext dbContext)
-        {
-            _dbContext = dbContext;
-        }
-        [HttpGet]
-        public async Task<IEnumerable<StudentGradeTracker_00017298>> GetAll() => await _dbContext.StudentGradeTracker_00017298s.ToArrayAsync();
 
-        [HttpGet("id")]
+        private readonly IRepository_00017298<StudentGradeTracker_00017298> _studentGradeTracker_00017298_Repository;
+        public Tracker_00017298_Controller(IRepository_00017298<StudentGradeTracker_00017298> studentGradeTracker_00017298_Repository)
+        {
+            _studentGradeTracker_00017298_Repository = studentGradeTracker_00017298_Repository;
+        }
+
+
+
+
+
+
+
+
+
+
+        [HttpGet]
+        public async Task<IEnumerable<StudentGradeTracker_00017298>> GetAll() => await _studentGradeTracker_00017298_Repository.GetAllAsync();
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        [HttpGet("{id}")]
         [ProducesResponseType(typeof(StudentGradeTracker_00017298), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-
         public async Task<IActionResult> GetByID(int id)
         {
-            var resultedGradeTracker = await _dbContext.StudentGradeTracker_00017298s.FindAsync(id);
-            return resultedGradeTracker == null ? NotFound() : Ok(resultedGradeTracker);
+            var resultedToDo = await _studentGradeTracker_00017298_Repository.GetByIDAsync(id);
+            return resultedToDo == null ? NotFound() : Ok(resultedToDo);
         }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
         [HttpPost]
         [ProducesResponseType(StatusCodes.Status201Created)]
-
-        public async Task<IActionResult> Create(StudentGradeTracker_00017298 tracker_00017298)
+        public async Task<IActionResult> Create(StudentGradeTracker_00017298 items)
         {
-            await _dbContext.StudentGradeTracker_00017298s.AddAsync(tracker_00017298);
-            await _dbContext.SaveChangesAsync();
-
-            return CreatedAtAction(nameof(GetByID), new { id = tracker_00017298.Id }, tracker_00017298);
+            await _studentGradeTracker_00017298_Repository.AddAsync(items);
+            return Ok(items);
+            //return CreatedAtAction(nameof(GetByID), new { id = items.ID }, items);
         }
-        [HttpPut("{id}")]
+
+
+
+
+
+
+
+
+
+
+
+
+
+        [HttpPut]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public async Task<IActionResult> Update(int id, StudentGradeTracker_00017298 tracker_00017298)
+        public async Task<IActionResult> Update(StudentGradeTracker_00017298 items)
         {
-            if (id != tracker_00017298.Id) return BadRequest();
-            _dbContext.Entry(tracker_00017298).State = EntityState.Modified;
-            await _dbContext.SaveChangesAsync();
-
+            //if(id!=items.ID) return BadRequest();
+            await _studentGradeTracker_00017298_Repository.UpdateAsync(items);
             return NoContent();
         }
+
+
+
+
+
+
+
+
+
+
+
 
         [HttpDelete("{id}")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<IActionResult> Delete(int id)
         {
-            var StudentGradeTrackertoDelete = await _dbContext.StudentGradeTracker_00017298s.FindAsync(id);
-            if (StudentGradeTrackertoDelete == null) return NotFound();
-
-            _dbContext.StudentGradeTracker_00017298s.Remove(StudentGradeTrackertoDelete);
-            await _dbContext.SaveChangesAsync();
+            await _studentGradeTracker_00017298_Repository.DeleteAsync(id);
             return NoContent();
 
 
